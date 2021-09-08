@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'sys-proctable'
 
 describe SafeTimeout do
   context '.timeout' do
@@ -34,12 +35,14 @@ describe SafeTimeout do
 
     # Returns a hash of all running processes and their children
     def all_processes
-      `ps -eo pid,ppid`.lines.reduce(Hash.new []) do |hash, line|
-        pid, ppid = line.split.map(&:to_i)
-        hash[ppid] = [] unless hash.key?(ppid)
-        hash[ppid] << pid
-        hash
+      hash = {}
+
+      Sys::ProcTable.ps do |process|
+        hash[process.ppid] ||= []
+        hash[process.ppid] << process.pid
       end
+
+      hash
     end
 
     # Wait for up to 1 second for process to quit and report on

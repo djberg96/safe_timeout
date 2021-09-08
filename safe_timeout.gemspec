@@ -17,4 +17,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency "sys-proctable", "~> 1.2"
 end

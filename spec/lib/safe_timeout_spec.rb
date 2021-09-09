@@ -21,9 +21,15 @@ describe SafeTimeout do
     end
 
     it 'should not leave orphaned child process' do
-      child = fork do
+      if File::ALT_SEPARATOR
+        child = Process.spawn("ruby -e 'sleep 8'")
         SafeTimeout.timeout(5) { sleep 5 }
+      else
+        child = fork do
+          SafeTimeout.timeout(5) { sleep 5 }
+        end
       end
+
       :loop until grand_child = all_processes[child].first
       expect(grand_child).to be > child
 

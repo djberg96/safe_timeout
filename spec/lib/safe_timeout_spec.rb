@@ -35,7 +35,7 @@ describe SafeTimeout do
 
     # Returns a hash of all running processes and their children
     def all_processes
-      hash = {}
+      hash = Hash.new{ |h,k| h[k] = [] }
 
       Sys::ProcTable.ps do |process|
         hash[process.ppid] ||= []

@@ -27,7 +27,6 @@ module SafeTimeout
       # taking too long
       bin = Gem.bin_path('safe_timeout', 'safe_timeout')
       @child_pid = Process.spawn(bin, Process.pid.to_s, @expiration.to_s)
-      puts "CHILD PID: #{@child_pid}"
       Process.detach(@child_pid)
     end
 

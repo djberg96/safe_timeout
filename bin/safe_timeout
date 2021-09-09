@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
-require 'safe_timeout'
+require_relative "../lib/safe_timeout/interrupting_child_process"
+require_relative "../lib/safe_timeout"
 SafeTimeout::InterruptingChildProcess.new(*ARGV).wait_for_timeout
